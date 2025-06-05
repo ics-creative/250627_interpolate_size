@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>interpolate-sizeのサンプル</title>
+
+    <link rel="stylesheet" href="../style.css" />
+
+    <style>
+      :root{
+        interpolate-size: allow-keywords;
+      }
+
+      details {
+        /* --------アコーディオンの中身のスタイル-------- */
+        &::details-content {
+          transition: height 0.4s, opacity 0.4s, content-visibility 0.4s allow-discrete;
+          height: 0;
+          opacity: 0;
+          overflow: clip;
+          background-color: #f0f2ff;
+        }
+
+        /* --------アコーディオンの中身のスタイル（開いている時）-------- */
+        &[open]::details-content {
+          opacity: 1;
+        }
+      }
+
+      @supports (interpolate-size: allow-keywords) {
+        details[open]::details-content {
+          height: auto;
+        }
+      }
+
+      /* フォールバック */
+      @supports not (interpolate-size: allow-keywords) {
+        details[open]::details-content {
+          height: 150px;
+          overflow-y: scroll; /* 溢れる場合はスクロール可能にする */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <details>
+        <summary>
+          概要
+        </summary>
+        折りたたまれている部分です。
+      </details>
+    </div>
+  </body>
+</html>

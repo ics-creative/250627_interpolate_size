@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>interpolate-sizeのサンプル</title>
+
+    <link rel="stylesheet" href="../style.css" />
+
+    <style>
+      ::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .inner {
+        display: flex;
+        justify-content: space-between;
+        height: calc-size(auto, size + 200px);
+        opacity: 1;
+        transition: all 1s allow-discrete;
+
+        /* アニメーションの開始値 */
+        @starting-style {
+          height: 0;
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+      <button type="button" popovertarget="my-dialog" popovertargetaction="show">ダイアログを開く</button>
+
+      <dialog id="my-dialog" popover>
+        <div class="inner">
+          <div>ダイアログの外側をクリックしても閉じられます。</div>
+          <button type="button" popovertarget="my-dialog" popovertargetaction="hide">閉じる</button>
+        </div>
+      </dialog>
+  </body>
+</html>
