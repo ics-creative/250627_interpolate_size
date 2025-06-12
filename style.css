@@ -4,12 +4,16 @@
 }
 
 html {
+  height: 100%;
   font-family: system-ui, sans-serif;
 }
 
 body {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
 
   /* サポートブラウザ対象外だった場合のアラート */
   @supports not (interpolate-size: allow-keywords) {

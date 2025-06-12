@@ -8,19 +8,56 @@
     <link rel="stylesheet" href="../style.css" />
 
     <style>
+      :root{
+        interpolate-size: allow-keywords;
+      }
+
+
+      /*   開いた状態のダイアログ  */
+      dialog[open] {
+      }
+
+        /*   閉じた状態のダイアログ   */
+      dialog {
+        margin: auto; /* 中央配置 */
+        box-shadow: 0 2px 8px rgba(50, 50, 93, 0.2);
+        border-radius: 16px;
+        border: solid 3px #e0e0e0;
+
+        /*transition:*/
+        /*        opacity 0.7s ease-out,*/
+        /*        transform 0.7s ease-out,*/
+        /*        overlay 0.7s ease-out allow-discrete,*/
+        /*        display 0.7s ease-out allow-discrete;*/
+      }
+      /*   開く前の状態  */
+      /* 詳細度が同じであるため、前の dialog[open] ルールの後に置かなければ効果がありません */
+      @starting-style {
+        dialog[open] {
+          opacity: 0;
+        }
+      }
+
       ::backdrop {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-image:
+                linear-gradient(0deg, rgba(190,200,206,0.3) 1px, rgba(0,0,0,0) 0),
+                linear-gradient(90deg, rgba(190,200,206,0.3) 1px, rgba(0,0,0,0) 0);
+        background-size: 20px 20px;
+        background-position: center;
       }
 
       .inner {
-        display: flex;
-        justify-content: space-between;
-        height: calc-size(auto, size + 200px);
+        width: max-content;
+        height: calc-size(auto, size + 100px);
         opacity: 1;
-        transition: all 1s allow-discrete;
+        transition:
+                width 0.7s cubic-bezier(0.19, 1, 0.22, 1) /* easeOutExpo */,
+                height 0.6s 0.4s cubic-bezier(0.19, 1, 0.22, 1) /* easeOutExpo */,
+                display 1s allow-discrete;
 
         /* アニメーションの開始値 */
         @starting-style {
+          width: 0;
           height: 0;
           opacity: 0;
         }
@@ -34,7 +71,7 @@
       <dialog id="my-dialog" popover>
         <div class="inner">
           <div>ダイアログの外側をクリックしても閉じられます。</div>
-          <button type="button" popovertarget="my-dialog" popovertargetaction="hide">閉じる</button>
+          <button type="button" popovertarget="my-dialog" popovertargetaction="hide" aria-label="とじる">とじる</button>
         </div>
       </dialog>
   </body>

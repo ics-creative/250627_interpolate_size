@@ -13,33 +13,59 @@
       }
 
       details {
-        /* --------アコーディオンの中身のスタイル-------- */
+        width: 240px;
+        /*border: 6px solid #ef89cf;*/
+        border-radius: 8px;
+        color: #f3fbff;
+        background: linear-gradient(-45deg, rgba(238, 174, 202, 1) 0%, rgba(148, 165, 233, 1) 100%);
+        box-shadow: 0 2px 8px rgba(50, 50, 93, 0.2);
+
+        position: relative;
+        &::before {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          content: "";
+          background: linear-gradient(-45deg, rgba(238, 174, 202, 1), rgba(148, 165, 233, 1)) border-box;
+          border: 4px solid transparent;
+          border-radius: 8px;
+          mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000);
+          mask-clip: padding-box, border-box;
+          mask-composite: exclude;
+        }
+
+        /* アコーディオンの中身のスタイル*/
         &::details-content {
-          transition: height 0.4s, opacity 0.4s, content-visibility 0.4s allow-discrete;
+          transition: height 0.4s, content-visibility 0.4s allow-discrete;
           height: 0;
-          opacity: 0;
           overflow: clip;
-          background-color: #f0f2ff;
         }
 
-        /* --------アコーディオンの中身のスタイル（開いている時）-------- */
+        /* 開いた時のスタイル */
         &[open]::details-content {
-          opacity: 1;
-        }
-      }
-
-      @supports (interpolate-size: allow-keywords) {
-        details[open]::details-content {
           height: auto;
         }
+
+        > div {
+          padding: 16px;
+          color: #141c20;
+          overflow: hidden;
+          border-radius: 8px;
+          background-color: #f7f8ff;
+        }
       }
 
-      /* フォールバック */
-      @supports not (interpolate-size: allow-keywords) {
-        details[open]::details-content {
-          height: 150px;
-          overflow-y: scroll; /* 溢れる場合はスクロール可能にする */
-        }
+
+      summary {
+        padding: 0.6em 1.2em 0.4em 1.2em;
+      }
+
+
+      .wrapper {
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
       }
     </style>
   </head>
@@ -48,9 +74,23 @@
     <div class="wrapper">
       <details>
         <summary>
-          概要
+          アコーディオン
         </summary>
-        折りたたまれている部分です。
+        <div >
+          1行目<br>2行目
+        </div>
+      </details>
+      <details>
+        <summary>
+          リスト
+        </summary>
+        <div >
+          <ol>
+            <li>アイテム</li>
+            <li>アイテム</li>
+            <li>アイテム</li>
+          </ol>
+        </div>
       </details>
     </div>
   </body>

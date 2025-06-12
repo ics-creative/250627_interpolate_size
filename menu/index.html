@@ -1,22 +1,111 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>interpolate-sizeのサンプル</title>
 
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../style.css"/>
 
     <style>
-      :root{
+      :root {
         interpolate-size: allow-keywords;
       }
-    </style>
-  </head>
 
-  <body>
-    <nav>
-      <a href="#">メニュー</a>
-    </nav>
-  </body>
+      .button {
+        display: block;
+        background-color: #cd32a9;
+        width: 56px; /* アニメーション前 */
+        transition: all 0.4s allow-discrete;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 8px;
+        border-radius: 28px;
+        border: none;
+        @media (any-hover: hover) {
+          &:hover {
+            width: min-content;
+          }
+        }
+      }
+
+      .button-icon {
+        display: inline-grid;
+        place-items: center;
+        background-color: #ffffff;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .button-text {
+        padding: 0 24px 0 16px;
+        color: #ffffff;
+      }
+
+
+      .drawer {
+        padding: 8px 16px 24px;
+        translate: -50% 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background-color: #ffb4c5;
+        width: 160px;
+        height: 42px;
+        transition: all 0.4s allow-discrete;
+        border-radius: 8px;
+        overflow: hidden;
+
+        @media (any-hover: hover) {
+          &:hover {
+            height: auto;
+            width: calc-size(auto, size + 100px);
+          }
+        }
+
+        > div {
+          background-color: #fff;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+      }
+
+      .wrapper {
+        width: 300px;
+        height: 100%;
+      }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+
+    <button class="button">
+        <span class="button-icon">🦆</span>
+        <span class="button-text">
+        シェア
+        </span>
+    </button>
+
+    <button class="button">
+        <span class="button-icon">🌐</span>
+        <span class="button-text">
+        URLをコピーする
+        </span>
+    </button>
+
+    <br>
+    <div class="drawer">
+        なんかのテキスト
+        <div>
+                <a href="#">長めの文言ボタン</a>
+                <a href="#">ボタン</a>
+                <a href="#">ボタン</a>
+        </div>
+    </div>
+</div>
+</body>
 </html>
