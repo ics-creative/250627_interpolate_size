@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>interpolate-sizeのサンプル</title>
+
+  <link rel="stylesheet" href="../style.css"/>
+
+  <!-- アイコンの読み込み -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+  <style>
+    .menu {
+      width: 72px; /* メニューが閉じてるときの幅 */
+      height: 72px;
+      transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+
+      display: flex;
+      flex-direction: row;
+      overflow: clip;
+      border-radius: 36px;
+      background: linear-gradient(-90deg, rgb(243, 143, 187), rgb(232, 156, 133));
+
+      &:has(.homeButton-input:checked) {
+        /* 隠していたアイテムを表示 */
+        width: calc-size(auto, size + 14px);
+      }
+
+      &:not(:has(.homeButton-input:checked)) {
+        /* 隠れている時は、フォーカスできないようにしておく */
+        .menu-items {
+          display: none;
+        }
+      }
+    }
+
+    .menu-items {
+      display: inline-flex;
+      flex-direction: row;
+      transition: display 0.4s allow-discrete;
+    }
+
+    .button {
+      width: 56px;
+      height: 100%;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      background-color: transparent;
+      @media (any-hover: hover) {
+        &:hover {
+          .material-icons {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+    .material-icons {
+      transition: color 0.3s;
+    }
+
+    .homeButton {
+      width: 72px;
+      height: 72px;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      &:focus-within {
+        outline: 2px solid rgb(62, 70, 73);
+        outline-offset: -2px;
+      }
+    }
+    .homeButton-icon {
+      display: inline-grid;
+      place-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: rgb(255 255 255 / 70%);
+      transition: background-color 0.3s;
+      @media (any-hover: hover) {
+        &:hover {
+          background-color: rgb(255 255 255 / 80%);
+        }
+      }
+    }
+    .homeButton-input {
+      appearance: none; /* デフォルトのチェックマークを非表示 */
+    }
+
+    .wrapper {
+      position: fixed;
+      left: calc(50% - 100px);
+      height: 100%;
+      display: grid;
+      place-content: center;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="menu">
+    <label class="homeButton" aria-label="メニュー">
+      <span class="homeButton-icon"><span class="material-icons">audiotrack</span></span>
+      <input type="checkbox" class="homeButton-input"/>
+    </label>
+
+    <div class="menu-items">
+      <button class="button">
+        <span class="material-icons">skip_previous</span>
+      </button>
+      <button class="button">
+        <span class="material-icons">pause</span>
+      </button>
+      <button class="button">
+        <span class="material-icons">fast_forward</span>
+      </button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -15,16 +15,23 @@ body {
   display: grid;
   place-items: center;
 
+  background-image: linear-gradient(0deg, rgb(150 190 206 / 30%) 1px, transparent 0),
+  linear-gradient(90deg, rgb(150 190 206 / 30%) 1px, transparent 0);
+  background-size: 24px 24px;
+  background-position: center;
+
   /* サポートブラウザ対象外だった場合のアラート */
   @supports not (interpolate-size: allow-keywords) {
     &::before {
+      position: fixed;
+      height: 2rem;
       display: block;
       padding: 32px;
       content: "interpolate-size: allow-keywords をサポートしているブラウザでご覧ください。";
       inset: 0;
       background-color: black;
       color: white;
-      font-size: 2rem;
+      font-size: 1.5rem;
       text-align: center;
     }
   }
