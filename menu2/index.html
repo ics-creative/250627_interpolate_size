@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>interpolate-sizeのサンプル</title>
+  <title>calc-size()のサンプル</title>
 
   <link rel="stylesheet" href="../style.css"/>
 
@@ -17,18 +17,20 @@
       height: 72px;
       transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 
-      display: flex;
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: start;
       overflow: clip;
       border-radius: 36px;
       background: linear-gradient(-90deg, rgb(243, 143, 187), rgb(232, 156, 133));
 
-      &:has(.homeButton-input:checked) {
-        /* 隠していたアイテムを表示 */
-        width: calc-size(auto, size + 14px);
+      /* 隠していたアイテムを表示 */
+      &.open {
+        width: auto; /* フォールバック */
+        width: calc-size(min-content, size + 14px);
       }
 
-      &:not(:has(.homeButton-input:checked)) {
+      &:not(&.open) {
         /* 隠れている時は、フォーカスできないようにしておく */
         .menu-items {
           display: none;
@@ -57,6 +59,7 @@
         }
       }
     }
+
     .material-icons {
       transition: color 0.3s;
     }
@@ -64,10 +67,18 @@
     .homeButton {
       width: 72px;
       height: 72px;
-      padding: 8px;
+      padding: 0;
       border-radius: 50%;
       cursor: pointer;
+      border: none;
+      background: transparent;
+      @media (any-hover: hover) {
+        &:hover .homeButton-icon {
+          background-color: rgb(255 255 255 / 80%);
+        }
+      }
     }
+
     .homeButton-icon {
       display: inline-grid;
       place-content: center;
@@ -76,14 +87,6 @@
       border-radius: 50%;
       background-color: rgb(255 255 255 / 70%);
       transition: background-color 0.3s;
-      @media (any-hover: hover) {
-        &:hover {
-          background-color: rgb(255 255 255 / 80%);
-        }
-      }
-    }
-    .homeButton-input {
-      appearance: none; /* デフォルトのチェックマークを非表示 */
     }
 
     .wrapper {
@@ -96,13 +99,13 @@
   </style>
 </head>
 
+<!-- NOTE：アニメーション解説を優先した最小構成のデモのため、読み上げ改善は行なっていません -->
 <body>
 <div class="wrapper">
   <div class="menu">
-    <label class="homeButton" aria-label="メニュー">
+    <button class="homeButton">
       <span class="homeButton-icon"><span class="material-icons">audiotrack</span></span>
-      <input type="checkbox" class="homeButton-input"/>
-    </label>
+    </button>
 
     <div class="menu-items">
       <button class="button">
@@ -117,5 +120,11 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.querySelector('.homeButton').addEventListener('click', () => {
+    document.querySelector('.menu').classList.toggle('open');
+  });
+</script>
 </body>
 </html>
