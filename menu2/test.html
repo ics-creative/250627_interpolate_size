@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>おまけ | @keyframesの検証</title>
+
+  <link rel="stylesheet" href="../style.css"/>
+
+  <!-- アイコンの読み込み -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
+  <style>
+    .menu {
+      width: 72px; /* メニューが閉じてるときの幅 */
+      height: 72px;
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: start;
+      overflow: clip;
+      border-radius: 36px;
+      background: linear-gradient(-90deg, rgb(243, 143, 187), rgb(232, 156, 133));
+
+      /* メニューを開く */
+      &.open {
+        animation: anim-open 4s forwards;
+      }
+
+      &:not(&.open) {
+        animation: anim-close 4s;
+      }
+    }
+
+    @keyframes anim-open {
+      0% {
+        width: 72px;
+      }
+      25% {
+        width: calc-size(min-content, size * 2);
+      }
+      50% {
+        width: calc-size(min-content, 72px + size / 3);
+      }
+      75% {
+        width: calc-size(min-content, size - 10rem);
+
+        /* アニメーション前後でキーワードが異なると動かないので以下はNG */
+        /* width: calc-size(auto, size - 10rem); */
+      }
+      100% {
+        width: calc-size(min-content, size + 14px);
+      }
+    }
+
+    :root {
+      interpolate-size: allow-keywords;
+    }
+
+    @keyframes anim-close {
+      0% {
+        width: min-content;
+      }
+      25% {
+        width: 1rem;
+      }
+      50% {
+        /* 前後が数値なので異なるキーワードでもOK */
+        width: auto;
+      }
+      75% {
+        width: calc(72px * 4);
+      }
+      100% {
+        width: 72px;
+      }
+    }
+
+    .menu-items {
+      display: inline-flex;
+      flex-direction: row;
+    }
+
+    .button {
+      width: 56px;
+      height: 100%;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      background-color: transparent;
+      @media (any-hover: hover) {
+        &:hover {
+          .material-icons {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+
+    .material-icons {
+      transition: color 0.3s;
+    }
+
+    .homeButton {
+      width: 72px;
+      height: 72px;
+      padding: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      @media (any-hover: hover) {
+        &:hover .homeButton-icon {
+          background-color: rgb(255 255 255 / 80%);
+        }
+      }
+    }
+
+    .homeButton-icon {
+      display: inline-grid;
+      place-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: rgb(255 255 255 / 70%);
+      transition: background-color 0.3s;
+    }
+
+    .wrapper {
+      position: fixed;
+      left: calc(50% - 100px);
+      height: 100%;
+      display: grid;
+      place-content: center;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="menu">
+    <button class="homeButton">
+      <span class="homeButton-icon"><span class="material-icons">audiotrack</span></span>
+    </button>
+
+    <div class="menu-items">
+      <button class="button">
+        <span class="material-icons">skip_previous</span>
+      </button>
+      <button class="button">
+        <span class="material-icons">pause</span>
+      </button>
+      <button class="button">
+        <span class="material-icons">fast_forward</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelector('.homeButton').addEventListener('click', () => {
+    document.querySelector('.menu').classList.toggle('open');
+  });
+</script>
+</body>
+</html>
