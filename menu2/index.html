@@ -27,7 +27,7 @@
       /* 隠していたアイテムを表示 */
       &.open {
         width: auto; /* フォールバック */
-        width: calc-size(min-content, size + 14px);
+        width: calc-size(min-content, size + 14px); /* min-content + 14px */
       }
 
       &:not(&.open) {
